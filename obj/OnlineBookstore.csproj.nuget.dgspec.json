@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Crimson\\source\\repos\\ASP.NET core web app chas 1\\OnlineBookstore\\OnlineBookstore\\OnlineBookstore.csproj": {}
+    "C:\\Users\\Petar\\Documents\\GitHub\\VisualStudio\\OnlineBookStore\\OnlineBookstore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Crimson\\source\\repos\\ASP.NET core web app chas 1\\OnlineBookstore\\OnlineBookstore\\OnlineBookstore.csproj": {
+    "C:\\Users\\Petar\\Documents\\GitHub\\VisualStudio\\OnlineBookStore\\OnlineBookstore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Crimson\\source\\repos\\ASP.NET core web app chas 1\\OnlineBookstore\\OnlineBookstore\\OnlineBookstore.csproj",
+        "projectUniqueName": "C:\\Users\\Petar\\Documents\\GitHub\\VisualStudio\\OnlineBookStore\\OnlineBookstore.csproj",
         "projectName": "OnlineBookstore",
-        "projectPath": "C:\\Users\\Crimson\\source\\repos\\ASP.NET core web app chas 1\\OnlineBookstore\\OnlineBookstore\\OnlineBookstore.csproj",
-        "packagesPath": "C:\\Users\\Crimson\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Crimson\\source\\repos\\ASP.NET core web app chas 1\\OnlineBookstore\\OnlineBookstore\\obj\\",
+        "projectPath": "C:\\Users\\Petar\\Documents\\GitHub\\VisualStudio\\OnlineBookStore\\OnlineBookstore.csproj",
+        "packagesPath": "C:\\Users\\Petar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Petar\\Documents\\GitHub\\VisualStudio\\OnlineBookStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Crimson\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Petar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,6 +61,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.1, )"
+            },
+            "NLog.Web.AspNetCore": {
+              "target": "Package",
+              "version": "[4.9.0, )"
             }
           },
           "imports": [
@@ -81,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

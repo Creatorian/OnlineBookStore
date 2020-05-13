@@ -6,7 +6,9 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using OnlineBookstore.Data.Entities;
+using OnlineBookstore.Logger;
 using OnlineBookstore.Models;
 using OnlineBookstore.Services.Service.Interfaces;
 
@@ -18,19 +20,47 @@ namespace OnlineBookstore.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IAuthorService _authorService;
         private readonly IPublisherService _publisherService;
+        private readonly ILogger<BookController> _logger;
 
-        public BookController(IBookService bookService, ICategoryService categoryService, IAuthorService authorService, IPublisherService publisherService)
+        public BookController(IBookService bookService, ICategoryService categoryService, IAuthorService authorService, IPublisherService publisherService, ILogger<BookController> logger)
         {
             _bookService = bookService;
             _categoryService = categoryService;
             _authorService = authorService;
             _publisherService = publisherService;
+            _logger = logger;
         }
 
         public IActionResult Index()
         {
             var bookList = _bookService.GetBooks();
+            if(bookList != null)
+            {
+                _logger.LogInformation(LoggerMessageDisplay.BooksListed);
+            }
+            else
+            {
+                _logger.LogInformation(LoggerMessageDisplay.NoBooksInDB);
+            }
             return View(bookList);
+        }
+
+        public JsonResult FillBooksDataTable()
+        {
+            var booklist = _bookService.GetBooks();
+            return Json(new { data = booklist });
+        }
+
+        public IActionResult Details(int id)
+        {
+            var book = _bookService.GetBookById(id);
+            _logger.LogInformation(LoggerMessageDisplay.BookFoundDisplayDetails);
+
+            if(book == null)
+            {
+                _logger.LogInformation(LoggerMessageDisplay.BookEditNotFound);
+            }
+            return View(book);
         }
 
         //GET: Books/Create
@@ -150,16 +180,7 @@ namespace OnlineBookstore.Controllers
             return View(book);
         }
 
-        public IActionResult Details(int Id)
-        {
-            var book = _bookService.GetBookById(Id);
-            if (book == null)
-            {
-                return NotFound();
-            }
-            return View(book);
-        }
-
+        
         public IActionResult Delete(int Id)
         {
             var book = _bookService.GetBookById(Id);

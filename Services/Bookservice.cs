@@ -1,4 +1,6 @@
-﻿using OnlineBookstore.Data.Entities;
+﻿using Microsoft.Extensions.Logging;
+using OnlineBookstore.Data.Entities;
+using OnlineBookstore.Logger;
 using OnlineBookstore.Repositories.Repositories.Interfaces;
 using OnlineBookstore.Services.Service.Interfaces;
 using System;
@@ -11,15 +13,18 @@ namespace OnlineBookstore.Services
     public class Bookservice : IBookService
     {
         private readonly IbookRepository _bookRepository;
+        private readonly ILogger<Bookservice> _logger;
 
-        public Bookservice(IbookRepository bookRepository)
+        public Bookservice(IbookRepository bookRepository, ILogger<Bookservice> logger)
         {
             _bookRepository = bookRepository;
+            _logger = logger;
         }
 
         public void Add(Book book)
         {
-            _bookRepository.Add(book);        
+            _bookRepository.Add(book);
+            _logger.LogInformation(LoggerMessageDisplay.BookCreated);
         }
 
         public void Delete(int bookID)
