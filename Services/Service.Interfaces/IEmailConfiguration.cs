@@ -7,5 +7,11 @@ namespace OnlineBookstore.Services.Service.Interfaces
 {
     interface IEmailConfiguration
     {
+        string SmtpServer { get; set; }
+        int SmtpPort { get; }
+        string SmtpUsername { get; set; }
+        string SmtpPassword { get; set; }
+        string AppEmailFrom { get; }
+        string EmailName { get; }
     }
 }

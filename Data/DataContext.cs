@@ -16,6 +16,8 @@ namespace OnlineBookstore.Data
         {
         }
 
+        public IConfiguration Configuration { get; }
+
         public DbSet<Book> Books { get; set; } //table name
         public DbSet<Category> Categories { get; set; } //table name
 
@@ -24,17 +26,58 @@ namespace OnlineBookstore.Data
         public DbSet<Photo> Photos { get; set; } //table name
         public DbSet<User> Users { get; set; } //table name
         public DbSet<Author> Authors { get; set; } //table name
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<PreOrder> PreOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //const string ADMIN_ID = "nesho";
-            //const string ROLE_ID = ADMIN_ID;
+            const string ADMIN_ID = "b4280b6a-0613-4cbd-a9e6-f1701e926e73";
+            const string ROLE_ID = ADMIN_ID;
+            const string password = "admin123abc";
 
             //var passwordFromSettings = new ConfigurationBuilder()
             //    .AddJsonFile("appsettings.json")
             //    .Build()
             //    .GetSection("AdminCredentials")["Password"];
+            //var emailFromSetting = new ConfigurationBuilder()
+            //    .AddJsonFile("appsettings.json")
+            //    .Build()
+            //    .GetSection("AdminCredentials")["Username"];
 
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Id = ROLE_ID,
+                    Name = "admin",
+                    NormalizedName = "ADMIN"
+                },
+                new IdentityRole
+                {
+                    Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e75",
+                    Name = "guest",
+                    NormalizedName = "GUEST"
+                });
+
+            var hasher = new PasswordHasher<IdentityUser>();
+
+            modelBuilder.Entity<IdentityUser>().HasData(new IdentityUser
+            {
+                Id = ADMIN_ID,
+                UserName = "admin@onlinebookstore.com",
+                NormalizedUserName = "ADMIN@ONLINEBOOKSTORE.COM",
+                Email = "admin@onlinebookstore.com",
+                NormalizedEmail = "ADMIN@ONLINEBOOKSTORE.COM",
+                EmailConfirmed = true,
+                PasswordHash = hasher.HashPassword(null, password),
+                SecurityStamp = string.Empty,
+                ConcurrencyStamp = "c8554266-b401-4519-9aeb-a9283053fc58"
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = ROLE_ID,
+                UserId = ADMIN_ID
+            });
             // Category Seed Data
             modelBuilder.Entity<Category>().HasData(
                     new Category
