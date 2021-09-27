@@ -24,7 +24,6 @@ namespace OnlineBookstore.Data
         public DbSet<Subcategory> Subcategories { get; set; } //table name
         public DbSet<Publisher> Publishers { get; set; } //table name
         public DbSet<Photo> Photos { get; set; } //table name
-        public DbSet<User> Users { get; set; } //table name
         public DbSet<Author> Authors { get; set; } //table name
         public DbSet<Order> Orders { get; set; }
         public DbSet<PreOrder> PreOrders { get; set; }
@@ -53,10 +52,17 @@ namespace OnlineBookstore.Data
                 },
                 new IdentityRole
                 {
+                    Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e74",
+                    Name = "editor",
+                    NormalizedName = "EDITOR"
+                },
+                new IdentityRole
+                {
                     Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e75",
                     Name = "guest",
                     NormalizedName = "GUEST"
-                });
+                }
+            );
 
             var hasher = new PasswordHasher<IdentityUser>();
 
@@ -78,6 +84,7 @@ namespace OnlineBookstore.Data
                 RoleId = ROLE_ID,
                 UserId = ADMIN_ID
             });
+
             // Category Seed Data
             modelBuilder.Entity<Category>().HasData(
                     new Category
@@ -234,7 +241,72 @@ namespace OnlineBookstore.Data
                     Popularity = false
                 }
             );
-            // Book Seed Data
+
+            // Publisher Seed Data
+            modelBuilder.Entity<Publisher>().HasData(
+                new Publisher
+                {
+                    Id = 1,
+                    Name = "William Morrow Paperbacks",
+                    Country = "Ireland"
+                },
+                new Publisher
+                {
+                    Id = 2,
+                    Name = "Scholastic",
+                    Country = "USA"
+                },
+                new Publisher
+                {
+                    Id = 3,
+                    Name = "Penguin Random House",
+                    Country = "Not known"
+                },
+                new Publisher
+                {
+                    Id = 4,
+                    Name = "Hachette Livre",
+                    Country = "France"
+                },
+                new Publisher
+                {
+                    Id = 5,
+                    Name = "HarperCollins",
+                    Country = "USA"
+                },
+                new Publisher
+                {
+                    Id = 6,
+                    Name = "Macmillan Publishers",
+                    Country = "Germany"
+                },
+                new Publisher
+                {
+                    Id = 7,
+                    Name = "Simon & Schuster",
+                    Country = "USA"
+                },
+                new Publisher
+                {
+                    Id = 8,
+                    Name = "McGraw-Hill Education",
+                    Country = "USA"
+                },
+                new Publisher
+                {
+                    Id = 9,
+                    Name = "Houghton Mifflin Harcourt",
+                    Country = "USA"
+                },
+                new Publisher
+                {
+                    Id = 10,
+                    Name = "Pearson Education",
+                    Country = "USA"
+                }
+            );
+
+            //Book Seed Data
             modelBuilder.Entity<Book>().HasData(
                 new Book
                 {

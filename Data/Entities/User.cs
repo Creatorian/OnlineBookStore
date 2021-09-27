@@ -17,11 +17,12 @@ namespace OnlineBookstore.Data.Entities
         [StringLength(255)]
         public string Email { get; set; }
         [StringLength(255)]
-        public string Coutry { get; set; }
+        public string Country { get; set; }
         [StringLength(255)]
         public string City { get; set; }
         [StringLength(255)]
         public string Phone { get; set; }
+        public string Description { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime LastActive { get; set; }
 

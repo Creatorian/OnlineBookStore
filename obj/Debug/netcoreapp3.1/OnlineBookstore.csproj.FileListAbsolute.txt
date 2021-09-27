@@ -719,3 +719,8 @@ C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\Onl
 C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\OnlineBookstore.Views.pdb
 C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\OnlineBookstore.csproj.CopyComplete
 C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\OnlineBookstore.genruntimeconfig.cache
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\Azure.Core.dll
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\Azure.Extensions.AspNetCore.Configuration.Secrets.dll
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\Azure.Identity.dll
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\Azure.Security.KeyVault.Secrets.dll
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.Extensions.Msal.dll
