@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,11 +9,26 @@ namespace OnlineBookstore.Areas.Identity
 {
     public class UserModel
     {
+        [Key]
+        public string Id { get; set; }
+
         [Required]
-        public int Id { get; set; }
+        public string Name { get; set; }
+
         [Required]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@")]
-        public int Name { get; set; }
-        
+        public string Email { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+
+        public IQueryable<SelectListItem> Roles { get; set; }
+
+        public string RoleId { get; set; }
+
+        public string RoleName { get; set; }
+
+
+
     }
 }
