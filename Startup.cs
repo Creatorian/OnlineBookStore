@@ -16,6 +16,8 @@ using OnlineBookstore.Repositories.Repositories.Interfaces;
 using OnlineBookstore.Repositories;
 using OnlineBookstore.Services.Service.Interfaces;
 using OnlineBookstore.Services;
+using Microsoft.AspNetCore.Mvc;
+using OnlineBookstore.Data.Entities;
 
 namespace OnlineBookstore
 {
@@ -38,6 +40,23 @@ namespace OnlineBookstore
                 .AddEntityFrameworkStores<DataContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddRazorPagesOptions(options =>
+                {
+                    //options.AllowAreas = true;
+                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
 
             //Repos
             services.AddTransient<IbookRepository, BookRepository>();
@@ -51,6 +70,11 @@ namespace OnlineBookstore
             services.AddTransient<ICategoryService, Categoryservice>();
             services.AddTransient<IPublisherService, Publisherservice>();
 
+            // Email Config
+            services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+
+            // Admin User Settings
+            // services.AddSingleton<IAdminUserSettings>(Configuration.GetSection("AppSettings").Get<AdminUserSettings>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
