@@ -2,55 +2,75 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thread>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShortDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Popularity)
-            </th>
-            <th></th>
-        </tr>
-    </thread>
-    <tbody>
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(ModelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(ModelItem => item.ShortDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(ModelItem => item.Popularity)
-        </td>
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-block btn-primary">
-                <i class="fas fa-edit"></i> &nbsp; Edit
-            </a>
+<h1 class="bg-dark text-white text-center p-3">Authors List</h1>
 
-            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-block btn-primary">
-                <i class="fas fa-info-circle"></i> &nbsp; Details
-            </a>
+<div class="custom-container">
+    <table class="table">
+        <thread>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="3">
+                    <a asp-action="Create" class="btn btn-success btn-block"> <i class="fas fa-plus"></i> Create New Author</a>
+                </th>
+            </tr>
 
-            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-block btn-primary">
-                <i class="fas fa-trash-alt"></i> &nbsp; Delete
-            </a>
-        </td>
-    </tr>
-}
-    </tbody>
-</table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShortDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Popularity)
+                </th>
+                <th colspan="3">Actions</th>
+            </tr>
+        </thread>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.ShortDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.Popularity)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-block btn-primary">
+                            <i class="fas fa-edit"></i> &nbsp; Edit
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-block btn-primary">
+                            <i class="fas fa-info-circle"></i> &nbsp; Details
+                        </a>
+                    </td>
+                    <td>
+                        @if (ViewContext.HttpContext.User.IsInRole("editor"))
+                        {
+
+                        }
+                        else
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-block btn-danger"> 
+                        <i class="fas fa-trash-alt"></i> &nbsp; Delete</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,30 +1,32 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using OnlineBookstore.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using OnlineBookstore.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OnlineBookstore.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace OnlineBookstore.Data
 {
     public class DataContext : IdentityDbContext<IdentityUser>
     {
-        public DataContext(DbContextOptions options) : base(options)
-        {
-        }
+        public DataContext(DbContextOptions options) : base(options) { }
 
         public IConfiguration Configuration { get; }
 
-        public DbSet<Book> Books { get; set; } //table name
-        public DbSet<Category> Categories { get; set; } //table name
-
-        public DbSet<Subcategory> Subcategories { get; set; } //table name
-        public DbSet<Publisher> Publishers { get; set; } //table name
-        public DbSet<Photo> Photos { get; set; } //table name
-        public DbSet<Author> Authors { get; set; } //table name
+        // ********* we have to tell the datacontext class about our models *********
+        public DbSet<Book> Books { get; set; }   // table name
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Subcategory> Subcategories { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<PreOrder> PreOrders { get; set; }
 
@@ -33,7 +35,6 @@ namespace OnlineBookstore.Data
             const string ADMIN_ID = "b4280b6a-0613-4cbd-a9e6-f1701e926e73";
             const string ROLE_ID = ADMIN_ID;
             const string password = "admin123abc";
-
             //var passwordFromSettings = new ConfigurationBuilder()
             //    .AddJsonFile("appsettings.json")
             //    .Build()
@@ -87,57 +88,58 @@ namespace OnlineBookstore.Data
 
             // Category Seed Data
             modelBuilder.Entity<Category>().HasData(
-                    new Category
-                    {
-                        Id = 1,
-                        Name = "Fiction"
-                    },
-                    new Category
-                    {
-                        Id = 2,
-                        Name = "Action"
-                    },
-                    new Category
-                    {
-                        Id = 3,
-                        Name = "Crime"
-                    },
-                    new Category
-                    {
-                        Id = 4,
-                        Name = "Adventure"
-                    },
-                    new Category
-                    {
-                        Id = 5,
-                        Name = "Drama"
-                    },
-                    new Category
-                    {
-                        Id = 6,
-                        Name = "Fantasy"
-                    },
-                    new Category
-                    {
-                        Id = 7,
-                        Name = "Thrillers"
-                    },
-                    new Category
-                    {
-                        Id = 8,
-                        Name = "General"
-                    },
-                    new Category
-                    {
-                        Id = 9,
-                        Name = "Horror"
-                    },
-                    new Category
-                    {
-                        Id = 10,
-                        Name = "Uncategorised"
-                    }
-                );
+                new Category
+                {
+                    Id = 1,
+                    Name = "Fiction"
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Action"
+                },
+                new Category
+                {
+                    Id = 3,
+                    Name = "Crime"
+                },
+                new Category
+                {
+                    Id = 4,
+                    Name = "Adventure"
+                },
+                new Category
+                {
+                    Id = 5,
+                    Name = "Drama"
+                },
+                new Category
+                {
+                    Id = 6,
+                    Name = "Fantasy"
+                },
+                new Category
+                {
+                    Id = 7,
+                    Name = "Thrillers"
+                },
+                new Category
+                {
+                    Id = 8,
+                    Name = "General"
+                },
+                new Category
+                {
+                    Id = 9,
+                    Name = "Horror"
+                },
+                new Category
+                {
+                    Id = 10,
+                    Name = "Uncategorised"
+                }
+            );
+
             // Author Seed Data
             modelBuilder.Entity<Author>().HasData(
                 new Author
@@ -306,7 +308,7 @@ namespace OnlineBookstore.Data
                 }
             );
 
-            //Book Seed Data
+            // Book Seed Data
             modelBuilder.Entity<Book>().HasData(
                 new Book
                 {
@@ -888,10 +890,10 @@ namespace OnlineBookstore.Data
                     SoldItems = 11
                 }
             );
+
             base.OnModelCreating(modelBuilder);
         }
 
-        
 
     }
 }

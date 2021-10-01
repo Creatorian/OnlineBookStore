@@ -8,11 +8,27 @@ namespace OnlineBookstore.Repositories.Repositories.Interfaces
 {
      public interface IbookRepository
     {
-        void Add(Book book);
-        void Edit(Book book);
-        void Delete(int bookID);
+        void AddBook(Book book);
+        void EditBook(Book book);
+        void DeleteBook(int bookID);
 
         Book GetBookById(int id);
-        IEnumerable<Book> GetBooks();
+
+        IEnumerable<Book> GetAllBooks();
+        IQueryable<Book> GetAllBooksQueryable();
+
+
+        IEnumerable<Book> GetAllBooksByUser(User user);
+        IEnumerable<Book> GetAllBooksByUserId(int userId);
+        IEnumerable<Book> GetAllBooksByDateDescending();
+        IEnumerable<Book> GetAllBooksByDateAscending();
+        IEnumerable<Book> GetAllBooksFromToDateByUserId(int userId, DateTime from, DateTime to);
+        IEnumerable<Book> GetAllBooksByPriceAccending();
+        IEnumerable<Book> GetAllBooksByPriceDescending();
+        IEnumerable<Book> GetAllBooksByGeoLocationCountry(string country);
+        IEnumerable<Book> GetAllBooksByPublisher(Publisher publisher);
+        IEnumerable<Book> GetAllBooksForWishlist();
+        IEnumerable<Book> GetTopPopularBooks();
+        IEnumerable<Book> GetTopPopularBooksByBestSellingAuthor(int authorId);
     }
 }

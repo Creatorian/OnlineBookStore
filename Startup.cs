@@ -35,7 +35,7 @@ namespace OnlineBookstore
         {
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("BookStoreinfo")));
+                    Configuration.GetConnectionString("BookstoreConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<DataContext>();
             services.AddControllersWithViews();

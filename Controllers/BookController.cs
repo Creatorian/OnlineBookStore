@@ -33,7 +33,7 @@ namespace OnlineBookstore.Controllers
 
         public IActionResult Index()
         {
-            var bookList = _bookService.GetBooks();
+            var bookList = _bookService.GetAllBooks();
             if(bookList != null)
             {
                 _logger.LogInformation(LoggerMessageDisplay.BooksListed);
@@ -47,7 +47,7 @@ namespace OnlineBookstore.Controllers
 
         public JsonResult FillBooksDataTable()
         {
-            var booklist = _bookService.GetBooks();
+            var booklist = _bookService.GetAllBooks();
             return Json(new { data = booklist });
         }
 
@@ -143,7 +143,7 @@ namespace OnlineBookstore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _bookService.Add(book);
+                _bookService.AddBook(book);
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -169,7 +169,7 @@ namespace OnlineBookstore.Controllers
             {
                 try
                 {
-                    _bookService.Edit(book);
+                    _bookService.EditBook(book);
                 }
                 catch (Exception ex)
                 {
@@ -195,7 +195,7 @@ namespace OnlineBookstore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _bookService.Delete(Id);
+                _bookService.DeleteBook(Id);
             }
             return RedirectToAction(nameof(Index));
         }

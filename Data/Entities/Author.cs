@@ -10,10 +10,14 @@ namespace OnlineBookstore.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+
         [StringLength(350)]
         public string Name { get; set; }
+
         public string ShortDescription { get; set; }
+
         public bool Popularity { get; set; }
+
         public virtual ICollection<Book> Books { get; set; }
     }
 }

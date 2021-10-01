@@ -21,20 +21,85 @@ namespace OnlineBookstore.Services
             _logger = logger;
         }
 
-        public void Add(Book book)
+        
+        public void AddBook(Book book)
         {
-            _bookRepository.Add(book);
-            _logger.LogInformation(LoggerMessageDisplay.BookCreated);
+            throw new NotImplementedException();
         }
 
         public void Delete(int bookID)
         {
-            _bookRepository.Delete(bookID);
+            //_bookRepository.Delete(bookID);
+        }
+
+        public void DeleteBook(int bookID)
+        {
+            throw new NotImplementedException();
         }
 
         public void Edit(Book book)
         {
-            _bookRepository.Edit(book);
+            //_bookRepository.Edit(book);
+        }
+
+        public void EditBook(Book book)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooks()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksByDateAccending()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksByDateDescending()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksByGeoLocationCountry(string country)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksByPriceAccending()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksByPriceDescending()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksByPublisher(Publisher publisher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksByUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksByUserId(int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> GetAllBooksFromToDateByUserId(int userID, DateTime from, DateTime to)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Book> GetAllBooksQueryable()
+        {
+            throw new NotImplementedException();
         }
 
         public Book GetBookById(int id)
@@ -45,8 +110,19 @@ namespace OnlineBookstore.Services
 
         public IEnumerable<Book> GetBooks()
         {
-            var result = _bookRepository.GetBooks();
+            var result = _bookRepository.GetAllBooks();
             return result;
+        }
+
+        public IEnumerable<Book> GetTopPopularBooks()
+        {
+            var result = _bookRepository.GetTopPopularBooks();
+            return result;
+        }
+
+        public IEnumerable<Book> TopPopularBooksByBestSellingAuthor(int authorID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

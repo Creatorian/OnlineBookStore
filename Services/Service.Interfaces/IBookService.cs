@@ -8,11 +8,26 @@ namespace OnlineBookstore.Services.Service.Interfaces
 {
     public interface IBookService
     {
-        void Add(Book book);
-        void Edit(Book book);
-        void Delete(int bookID);
-        Book GetBookById(int id);
-        IEnumerable<Book> GetBooks();
+        void AddBook(Book book);
+        void EditBook(Book book);
+        void DeleteBook(int bookID);
 
+        Book GetBookById(int id);
+
+        IEnumerable<Book> GetAllBooks();
+        IQueryable<Book> GetAllBooksQueryable();
+
+
+        IEnumerable<Book> GetAllBooksByUser(User user);
+        IEnumerable<Book> GetAllBooksByUserId(int userID);
+        IEnumerable<Book> GetAllBooksByDateDescending();
+        IEnumerable<Book> GetAllBooksByDateAccending();
+        IEnumerable<Book> GetAllBooksFromToDateByUserId(int userID, DateTime from, DateTime to);
+        IEnumerable<Book> GetAllBooksByPriceAccending();
+        IEnumerable<Book> GetAllBooksByPriceDescending();
+        IEnumerable<Book> GetAllBooksByGeoLocationCountry(string country);
+        IEnumerable<Book> GetAllBooksByPublisher(Publisher publisher);
+        IEnumerable<Book> GetTopPopularBooks();
+        IEnumerable<Book> TopPopularBooksByBestSellingAuthor(int authorID);
     }
 }

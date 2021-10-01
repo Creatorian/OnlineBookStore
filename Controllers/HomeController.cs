@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineBookstore.Models;
@@ -12,12 +13,20 @@ using OnlineBookstore.Services.Service.Interfaces;
 namespace OnlineBookstore.Controllers
 {
     public class HomeController : Controller
-    {   
-        private readonly IBookService _bookservice;
+    {
+        private readonly IBookService _bookService;
+        private readonly IAuthorService _authorService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HomeController(IBookService bookservice)
+        public HomeController(
+            IBookService bookService,
+            IAuthorService authorService,
+            IHttpContextAccessor httpContextAccessor
+            )
         {
-            _bookservice = bookservice;
+            _bookService = bookService;
+            _authorService = authorService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult Index()
