@@ -2,31 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using OnlineBookstore.Data.Entities;
+using OnlineBookstore.Logger;
 using OnlineBookstore.Models;
 using OnlineBookstore.Services.Service.Interfaces;
 
 namespace OnlineBookstore.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
-        private readonly IBookService _bookService;
         private readonly ICategoryService _categoryService;
-        private readonly IAuthorService _authorService;
-        private readonly IPublisherService _publisherService;
+        private readonly ILogger<BookController> _logger;
 
-        public CategoryController(IBookService bookService, ICategoryService categoryService, IAuthorService authorService, IPublisherService publisherService)
+        public CategoryController(ICategoryService categoryService, ILogger<BookController> logger)
         {
-            _bookService = bookService;
             _categoryService = categoryService;
-            _authorService = authorService;
-            _publisherService = publisherService;
+            _logger = logger;
         }
 
         public IActionResult Index()
         {
             var categories = _categoryService.GetCategories();
+            if (categories != null)
+            {
+                _logger.LogInformation(LoggerMessageDisplay.CategoriesListed);
+            }
+            else
+            {
+                _logger.LogInformation(LoggerMessageDisplay.NoCategoriesInDB);
+            }
             return View(categories);
         }
 
@@ -45,10 +53,28 @@ namespace OnlineBookstore.Controllers
             if (ModelState.IsValid)
             {
                 category.Name = categoryViewModel.Name;
+
                 _categoryService.Add(category);
+                _logger.LogInformation(LoggerMessageDisplay.CategoryCreated);
+
                 return RedirectToAction(nameof(Index));
             }
+
+            _logger.LogError(LoggerMessageDisplay.CategoryNotCreatedModelStateInvalid);
             return View(category);
+        }
+
+        [HttpPost]
+        public JsonResult CreateCategoryAJAX(string name)
+        {
+            var category = new Category();
+
+            if (name != "" || name != null)
+            {
+                category.Name = name;
+                _categoryService.Add(category);
+            }
+            return Json(category);
         }
 
         //GET: Category/Edit/5
@@ -67,37 +93,42 @@ namespace OnlineBookstore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public IActionResult Edit(int id, Category category)
         {
-                if(id != category.Id)
-                {
-                    return NotFound();
-                }
-
-                if(ModelState.IsValid)
-                {
-                    try
-                    {
-                        _categoryService.Edit(category);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw;
-                    }
-                    return RedirectToAction(nameof(Index));
-                }
-                return View(category);
+            if (id != category.Id)
+            {
+                _logger.LogWarning(LoggerMessageDisplay.NoCategoryFound);
+                return NotFound();
             }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _categoryService.Edit(category);
+                    _logger.LogInformation(LoggerMessageDisplay.CategoryEdited);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogInformation(LoggerMessageDisplay.CategoryEditErrorModelStateInvalid + " ---> " + ex);
+                    throw;
+                }
+                _logger.LogError(LoggerMessageDisplay.CategoryEditErrorModelStateInvalid);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
 
         //GET: Category/Details/5
 
         public IActionResult Details(int id)
         {
             var category = _categoryService.GetCategoryById(id);
+            _logger.LogInformation(LoggerMessageDisplay.CategoryFoundDisplayDetails);
 
-            if(category == null)
+            if (category == null)
             {
+                _logger.LogWarning(LoggerMessageDisplay.NoCategoryFound);
                 return NotFound();
             }
 
@@ -108,7 +139,8 @@ namespace OnlineBookstore.Controllers
         public IActionResult Delete(int id)
         {
             var category = _categoryService.GetCategoryById(id);
-            if(category == null)
+
+            if (category == null)
             {
                 return NotFound();
             }
@@ -121,23 +153,20 @@ namespace OnlineBookstore.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            _categoryService.Delete(id);
+            //var category = _categoryService.GetCategoryById(id);
+            try
+            {
+                _categoryService.Delete(id);
+                _logger.LogInformation(LoggerMessageDisplay.CategoryDeleted);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(LoggerMessageDisplay.CategoryDeletedError + " ---> " + ex);
+                throw;
+            }
 
+            _logger.LogError(LoggerMessageDisplay.CategoryDeletedError);
             return RedirectToAction(nameof(Index));
         }
-
-        [HttpPost]
-
-        public JsonResult CreateCategoryAJAX(string name)
-        {
-            var category = new Category();
-            if(name != "" || name != null)
-            {
-                category.Name = name;
-                _categoryService.Add(category);
-            }
-            return Json(category);
-        }
-
     }
 }

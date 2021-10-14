@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookstore.Data.Entities;
 using OnlineBookstore.Services.Service.Interfaces;
 
 namespace OnlineBookstore.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AuthorController : Controller
     {
         private readonly IAuthorService _authorService;
@@ -56,6 +58,20 @@ namespace OnlineBookstore.Controllers
             return View(author);
         }
 
+        [HttpPost]
+        public JsonResult CreateAuthorAJAX(string name, string shortDescription)
+        {
+            var author = new Author();
+
+            if (name != "" || name != null && shortDescription != "" || shortDescription != null)
+            {
+                author.Name = name;
+                author.ShortDescription = shortDescription;
+                _authorService.Add(author);
+            }
+            return Json(author);
+        }
+
         //GET: Authors/Edit/5
         public IActionResult Edit(int id)
         {
@@ -72,21 +88,20 @@ namespace OnlineBookstore.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Author author)
         {
-            if(id != author.Id)
+            if (id != author.Id)
             {
                 return NotFound();
             }
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
-
                     _authorService.Edit(author);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -114,19 +129,6 @@ namespace OnlineBookstore.Controllers
             _authorService.Delete(author);
 
             return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        public JsonResult CreateAuthorAJAX(string name, string shortDescription)
-        {
-            var author = new Author();
-            if(name != "" || name != null && shortDescription != "" || shortDescription != null)
-            {
-                author.Name = name;
-                author.ShortDescription = shortDescription;
-                _authorService.Add(author);
-            }
-            return Json(author);
         }
     }
 }

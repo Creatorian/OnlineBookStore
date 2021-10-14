@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookstore.Data.Entities;
 using OnlineBookstore.Models;
@@ -9,6 +10,7 @@ using OnlineBookstore.Services.Service.Interfaces;
 
 namespace OnlineBookstore.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class PublisherController : Controller
     {
 
@@ -22,7 +24,7 @@ namespace OnlineBookstore.Controllers
         public IActionResult Index()
         {
             var publisher = _publisherService.GetPublishers();
-            return View(publisher);
+            return View(publisher   );
         }
 
         //GET: Publisher/Create
@@ -49,6 +51,20 @@ namespace OnlineBookstore.Controllers
             return View(publisher);
         }
 
+        [HttpPost]
+        public JsonResult CreatePublisherAJAX(string name, string country)
+        {
+            var publisher = new Publisher();
+
+            if (name != "" || name != null && country != "" || country != null)
+            {
+                publisher.Name = name;
+                publisher.Country = country;
+                _publisherService.Add(publisher);
+            }
+            return Json(publisher);
+        }
+
         //GET: Publisher/Edit/5
 
         public IActionResult Edit(int id)
@@ -61,12 +77,12 @@ namespace OnlineBookstore.Controllers
             return View(publisher);
         }
 
-        //GET: Publisher/Edit/5
+        // POST: Publisher/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Publisher publisher)
         {
-            if(id  != publisher.Id)
+            if (id != publisher.Id)
             {
                 return NotFound();
             }
@@ -77,10 +93,9 @@ namespace OnlineBookstore.Controllers
                 {
                     _publisherService.Edit(publisher);
                 }
-
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -98,7 +113,20 @@ namespace OnlineBookstore.Controllers
             return View(publisher);
         }
 
-        //POST: Publisher/Delete/5
+        // GET: Publisher/Delete/5
+        public IActionResult Delete(int id)
+        {
+            var publisher = _publisherService.GetPublisherById(id);
+
+            if (publisher == null)
+            {
+                return NotFound();
+            }
+
+            return View(publisher);
+        }
+
+        // POST: Publisher/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

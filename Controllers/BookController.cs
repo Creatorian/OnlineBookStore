@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ using OnlineBookstore.Services.Service.Interfaces;
 
 namespace OnlineBookstore.Controllers
 {
+    [Authorize(Roles = "admin, editor")]
     public class BookController : Controller
     {
         private readonly IBookService _bookService;
@@ -31,6 +33,7 @@ namespace OnlineBookstore.Controllers
             _logger = logger;
         }
 
+        // GET: Books
         public IActionResult Index()
         {
             var bookList = _bookService.GetAllBooks();
@@ -51,6 +54,7 @@ namespace OnlineBookstore.Controllers
             return Json(new { data = booklist });
         }
 
+        // GET: Books/Details/5
         public IActionResult Details(int id)
         {
             var book = _bookService.GetBookById(id);
@@ -59,12 +63,28 @@ namespace OnlineBookstore.Controllers
             if(book == null)
             {
                 _logger.LogInformation(LoggerMessageDisplay.BookEditNotFound);
+                return NotFound();
             }
             return View(book);
         }
 
-        //GET: Books/Create
+        // GET: Books/Details/5
+        public JsonResult DetailBookDataTable(int id)
+        {
+            var book = _bookService.GetBookById(id);
+            _logger.LogInformation(LoggerMessageDisplay.BookFoundDisplayDetails);
 
+            if (book == null)
+            {
+                _logger.LogWarning(LoggerMessageDisplay.NoBookFound);
+                throw new ArgumentNullException("NoBookFound");
+            }
+
+            return Json(new { detailsData = book });
+        }
+
+        //GET: Books/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             var Categories = _categoryService.GetCategories();
@@ -138,70 +158,50 @@ namespace OnlineBookstore.Controllers
             }
             return selectList;
         }
+
+
+        // POST: Books/Create
+        [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult Create(Book book)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(BookViewModel bookViewModel)
         {
+            var book = new Book();
+
             if (ModelState.IsValid)
             {
+                book.BookType = bookViewModel.BookType;
+                book.CategoryID = bookViewModel.CategoryID;
+                book.CategoryName = bookViewModel.CategoryName;
+                book.Copies = bookViewModel.Copies;
+                book.Country = bookViewModel.Country;
+                book.Description = bookViewModel.Description;
+                book.Dimensions = bookViewModel.Dimensions;
+                book.Edition = bookViewModel.Edition;
+                book.Genre = bookViewModel.Genre;
+                book.Language = bookViewModel.Language;
+                book.NumberOfPages = bookViewModel.NumberOfPages;
+                book.Price = bookViewModel.Price;
+                book.Shipping = bookViewModel.Shipping;
+                book.Title = bookViewModel.Title;
+                book.Weight = bookViewModel.Weight;
+                book.YearOfIssue = bookViewModel.YearOfIssue;
+                book.UserId = bookViewModel.UserId;
+                book.PublisherID = bookViewModel.PublisherID;
+                book.PublisherName = bookViewModel.PublisherName;
+                book.AuthorID = bookViewModel.AuthorID;
+                book.AuthorName = bookViewModel.AuthorName;
+                book.PhotoURL = bookViewModel.PhotoURL;
+
                 _bookService.AddBook(book);
+                _logger.LogInformation(LoggerMessageDisplay.BookCreated);
                 return RedirectToAction(nameof(Index));
             }
-            return View();
-        }
-
-        // GET: Book/Edit
-        [HttpGet]
-
-        public IActionResult Edit(int Id)
-        {
-            var book = _bookService.GetBookById(Id);
-            if (book == null)
-            {
-                return NotFound();
-            }
+            _logger.LogError(LoggerMessageDisplay.BookNotCreatedModelStateInvalid);
             return View(book);
         }
 
         [HttpPost]
-        public IActionResult Edit(int Id, Book book)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _bookService.EditBook(book);
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(book);
-        }
-
-        
-        public IActionResult Delete(int Id)
-        {
-            var book = _bookService.GetBookById(Id);
-            if (book == null)
-            {
-                return NotFound();
-            }
-            return View(book);
-        }
-
-        public IActionResult DeleteConfirmed(int Id)
-        {
-            if (ModelState.IsValid)
-            {
-                _bookService.DeleteBook(Id);
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-
         public IActionResult UploadPhoto()
         {
             try
@@ -213,24 +213,105 @@ namespace OnlineBookstore.Controllers
                 if (file.Length > 0)
                 {
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-
                     var fullPath = Path.Combine(pathToSave, fileName);
+                    //var dbPath = Path.Combine(folderName, fileName);
                     var dbPath = fileName;
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         file.CopyTo(stream);
                     }
+
+                    _logger.LogInformation(LoggerMessageDisplay.PhotoUploaded);
                     return Ok(new { dbPath });
                 }
                 else
-
+                {
+                    _logger.LogError(LoggerMessageDisplay.PhotoUploadedError);
                     return BadRequest();
+                }
             }
-            catch(Exception ex)
+            catch (System.Exception ex)
             {
+                _logger.LogError(LoggerMessageDisplay.PhotoUploadedError + " --->" + ex);
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+
+        // GET: Books/Edit/5
+
+        public IActionResult Edit(int Id)
+        {
+            var book = _bookService.GetBookById(Id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
+        }
+
+        // POST: Books/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Book book)
+        {
+            if (id != book.Id)
+            {
+                _logger.LogWarning(LoggerMessageDisplay.BookEditNotFound);
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _bookService.EditBook(book);
+                    _logger.LogInformation(LoggerMessageDisplay.BookEdited);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogInformation(LoggerMessageDisplay.BookEditErrorModelStateInvalid + " ---> " + ex);
+                    throw;
+                }
+                _logger.LogError(LoggerMessageDisplay.BookEditErrorModelStateInvalid);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(book);
+        }
+
+
+        // GET: Books/Delete/5
+        [Authorize(Roles = "admin")]
+        public IActionResult Delete(int id)
+        {
+            var book = _bookService.GetBookById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return View(book);
+        }
+
+        // POST: Books/Delete/5
+        [Authorize(Roles = "admin")]
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            try
+            {
+                _bookService.DeleteBook(id);
+                _logger.LogInformation(LoggerMessageDisplay.BookDeleted);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(LoggerMessageDisplay.BookDeletedError + " ---> " + ex);
+                throw;
+            }
+
+            _logger.LogError(LoggerMessageDisplay.BookDeletedError);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -779,3 +779,8 @@ C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\Mor
 C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\MailKit.dll
 C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\MimeKit.dll
 C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\Razor\Views\Order\Create.cshtml.g.cs
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\Razor\Views\Order\Delete.cshtml.g.cs
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\Razor\Views\Order\Details.cshtml.g.cs
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\Razor\Views\Order\Edit.cshtml.g.cs
+C:\Users\Crimson\Documents\Bookstore\OnlineBookStore\obj\Debug\netcoreapp3.1\Razor\Views\Order\Index.cshtml.g.cs
