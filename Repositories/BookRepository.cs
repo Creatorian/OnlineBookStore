@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Repositories
 {
-    public class BookRepository : IbookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly DataContext _context;
         private readonly ILogger<BookRepository> _logger;
@@ -98,12 +98,14 @@ namespace OnlineBookstore.Repositories
 
         public IEnumerable<Book> GetAllBooksByUserId(int userId)
         {
-            throw new NotImplementedException();
+            var result = _context.Books.AsEnumerable().Where(x => x.UserId == userId);
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksForWishlist()
         {
-            throw new NotImplementedException();
+            var result = _context.Books.AsEnumerable();
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksFromToDateByUserId(int userId, DateTime from, DateTime to)
@@ -113,7 +115,8 @@ namespace OnlineBookstore.Repositories
 
         public IQueryable<Book> GetAllBooksQueryable()
         {
-            throw new NotImplementedException();
+            var result = _context.Books.AsQueryable();
+            return result;
         }
 
         public Book GetBookById(int id)
@@ -130,12 +133,14 @@ namespace OnlineBookstore.Repositories
 
         public IEnumerable<Book> GetTopPopularBooks()
         {
-            throw new NotImplementedException();
+            var result = _context.Books.AsEnumerable().OrderByDescending(x => x.SoldItems).Take(6);
+            return result;
         }
 
         public IEnumerable<Book> GetTopPopularBooksByBestSellingAuthor(int authorId)
         {
-            throw new NotImplementedException();
+            var result = _context.Books.AsEnumerable().Where(x => x.AuthorID == authorId);
+            return result;
         }
     }
 }

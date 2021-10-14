@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Services
 {
-    public class Publisherservice : IPublisherService
+    public class PublisherService : IPublisherService
     {
-        private readonly IpublisherRepository _ipublisherRepository;
+        private readonly IPublisherRepository _ipublisherRepository;
 
-        public Publisherservice(IpublisherRepository ipublisherRepository)
+        public PublisherService(IPublisherRepository ipublisherRepository)
         {
             _ipublisherRepository = ipublisherRepository;
         }

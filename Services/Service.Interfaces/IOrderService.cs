@@ -4,20 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBookstore.Repositories.Repositories.Interfaces
+namespace OnlineBookstore.Services.Service.Interfaces
 {
-    public interface IOrderRepository
+    public interface IOrderService
     {
         void Add(Order order);
         void Edit(Order order);
         void Delete(int id);
-        void DeleteBookById(int bookID);
+        void DeleteByBookId(int bookID);
         void DeleteByUserId(string userID);
-
 
         Order GetOrderById(int id);
         Order GetOrderByBookId(int bookID);
-        Order GetOrderByUserId(string userID);
+        Order GetOderByUserId(string userID);
 
         IEnumerable<Order> GetAllOrders();
         IEnumerable<Order> GetAllOrdersByUserId(string userID);

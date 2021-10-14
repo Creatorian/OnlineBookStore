@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Services.Service.Interfaces
 {
-    public class Categoryservice : ICategoryService
+    public class CategoryService : ICategoryService
     {
-        public readonly IcategoryRepository _categoryRepository;
+        public readonly ICategoryRepository _categoryRepository;
 
-        public Categoryservice(IcategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }

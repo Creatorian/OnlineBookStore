@@ -18,6 +18,7 @@ using OnlineBookstore.Services.Service.Interfaces;
 using OnlineBookstore.Services;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookstore.Data.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace OnlineBookstore
 {
@@ -59,16 +60,29 @@ namespace OnlineBookstore
 
 
             //Repos
-            services.AddTransient<IbookRepository, BookRepository>();
-            services.AddTransient<IauthorRepository, AuthorRepository>();
-            services.AddTransient<IcategoryRepository, CategoryRepository>();
-            services.AddTransient<IpublisherRepository, PublisherRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IWishlistRepository, WishlistRepository>();
+            services.AddTransient<IPublisherRepository, PublisherRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ISearchRepository, SearchRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
             //Services
-            services.AddTransient<IBookService, Bookservice>();
-            services.AddTransient<IAuthorService, Authorservice>();
-            services.AddTransient<ICategoryService, Categoryservice>();
-            services.AddTransient<IPublisherService, Publisherservice>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IWishlistService, WishlistService>();
+            services.AddTransient<IPublisherService, PublisherService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            services.AddTransient<IOrderService, OrderService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Email Config
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());

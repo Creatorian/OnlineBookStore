@@ -1,11 +1,20 @@
-﻿using System;
+﻿using OnlineBookstore.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineBookstore.Services.Service.Interfaces
 {
-    interface IWishlistService
+    public interface IWishlistService
     {
+        void Add(Wishlist wishlist);
+        void Edit(Wishlist wishlist);
+        void Delete(int id);
+        void DeleteByBookId(int bookID);
+        Wishlist GetWishlistById(int id);
+        Wishlist GetWishlistByBookId(int bookID);
+        IEnumerable<Wishlist> GetAllWishlists();
+        IEnumerable<Wishlist> GetAllWishlistByUserId(string userId);
     }
 }

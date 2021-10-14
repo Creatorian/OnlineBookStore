@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Services
 {
-    public class Bookservice : IBookService
+    public class BookService : IBookService
     {
-        private readonly IbookRepository _bookRepository;
-        private readonly ILogger<Bookservice> _logger;
+        private readonly IBookRepository _bookRepository;
+        private readonly ILogger<BookService> _logger;
 
-        public Bookservice(IbookRepository bookRepository, ILogger<Bookservice> logger)
+        public BookService(IBookRepository bookRepository, ILogger<BookService> logger)
         {
             _bookRepository = bookRepository;
             _logger = logger;
@@ -24,82 +24,86 @@ namespace OnlineBookstore.Services
         
         public void AddBook(Book book)
         {
-            throw new NotImplementedException();
+            _bookRepository.AddBook(book);
+            _logger.LogInformation(LoggerMessageDisplay.BookCreated);
         }
 
-        public void Delete(int bookID)
-        {
-            //_bookRepository.Delete(bookID);
-        }
 
         public void DeleteBook(int bookID)
         {
-            throw new NotImplementedException();
+            _bookRepository.DeleteBook(bookID);
         }
 
-        public void Edit(Book book)
-        {
-            //_bookRepository.Edit(book);
-        }
 
         public void EditBook(Book book)
         {
-            throw new NotImplementedException();
+            _bookRepository.EditBook(book);
         }
 
         public IEnumerable<Book> GetAllBooks()
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooks();
+            return result;
         }
 
-        public IEnumerable<Book> GetAllBooksByDateAccending()
+        public IEnumerable<Book> GetAllBooksByDateAscending()
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksByDateAscending();
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksByDateDescending()
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksByDateDescending();
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksByGeoLocationCountry(string country)
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksByGeoLocationCountry(country);
+            return result;
         }
 
-        public IEnumerable<Book> GetAllBooksByPriceAccending()
+        public IEnumerable<Book> GetAllBooksByPriceAscending()
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksByPriceAccending();
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksByPriceDescending()
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksByPriceDescending();
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksByPublisher(Publisher publisher)
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksByPublisher(publisher);
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksByUser(User user)
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksByUser(user);
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksByUserId(int userID)
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksByUserId(userID);
+            return result;
         }
 
         public IEnumerable<Book> GetAllBooksFromToDateByUserId(int userID, DateTime from, DateTime to)
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksFromToDateByUserId(userID, from, to);
+            return result;
         }
 
         public IQueryable<Book> GetAllBooksQueryable()
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetAllBooksQueryable();
+            return result;
         }
 
         public Book GetBookById(int id)
@@ -108,11 +112,6 @@ namespace OnlineBookstore.Services
             return result;
         }
 
-        public IEnumerable<Book> GetBooks()
-        {
-            var result = _bookRepository.GetAllBooks();
-            return result;
-        }
 
         public IEnumerable<Book> GetTopPopularBooks()
         {
@@ -122,7 +121,8 @@ namespace OnlineBookstore.Services
 
         public IEnumerable<Book> TopPopularBooksByBestSellingAuthor(int authorID)
         {
-            throw new NotImplementedException();
+            var result = _bookRepository.GetTopPopularBooksByBestSellingAuthor(authorID);
+            return result;
         }
     }
 }

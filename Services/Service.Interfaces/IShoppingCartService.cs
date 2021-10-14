@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBookstore.Repositories.Repositories.Interfaces
+namespace OnlineBookstore.Services.Service.Interfaces
 {
-    public interface IShoppingCartRepository
+    public interface IShoppingCartService
     {
         void Add(ShoppingCart shoppingCart);
         void Delete(int id);
@@ -16,6 +16,5 @@ namespace OnlineBookstore.Repositories.Repositories.Interfaces
 
         IEnumerable<ShoppingCart> GetAllItemsInCart();
         IEnumerable<ShoppingCart> GetAllItemsInCartByUserId(string userId);
-
     }
 }

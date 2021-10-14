@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Repositories
 {
-    public class AuthorRepository : IauthorRepository
+    public class AuthorRepository : IAuthorRepository
     {
         private readonly DataContext _context;
 

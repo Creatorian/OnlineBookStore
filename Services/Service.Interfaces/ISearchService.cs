@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBookstore.Repositories.Repositories.Interfaces
+namespace OnlineBookstore.Services.Service.Interfaces
 {
-    public interface ISearchRepository
+    public interface ISearchService
     {
         IEnumerable<Book> SearchBooks(List<string> keywords, string title, string author, string category);
         IEnumerable<Book> GetAllBooks();

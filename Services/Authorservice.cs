@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Services
 {
-    public class Authorservice : IAuthorService
+    public class AuthorService : IAuthorService
     {
-        private readonly IauthorRepository _authorRepository;
+        private readonly IAuthorRepository _authorRepository;
 
-        public Authorservice(IauthorRepository authorRepository)
+        public AuthorService(IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
         }
@@ -35,6 +35,12 @@ namespace OnlineBookstore.Services
         public Author GetAuthorById(int id)
         {
             var result = _authorRepository.GetAuthorById(id);
+            return result;
+        }
+
+        public Author GetAuthorByPopularity()
+        {
+            var result = _authorRepository.GetAuthorByPopularity();
             return result;
         }
 

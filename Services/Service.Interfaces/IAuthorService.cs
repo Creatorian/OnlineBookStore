@@ -13,5 +13,6 @@ namespace OnlineBookstore.Services.Service.Interfaces
         void Delete(Author author);
         IEnumerable<Author> GetAuthors();
         Author GetAuthorById(int id);
+        Author GetAuthorByPopularity();
     }
 }

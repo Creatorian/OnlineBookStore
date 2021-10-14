@@ -4,21 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBookstore.Repositories.Repositories.Interfaces
+namespace OnlineBookstore.Services.Service.Interfaces
 {
-    public interface IPreOrderRepository
+    public interface IPreOrderService
     {
         void Add(PreOrder preOrder);
         void Edit(PreOrder preOrder);
         void Delete(int id);
-
         void DeleteByBookId(int bookID);
         void DeleteByUserId(string userID);
 
         PreOrder GetPreOrderById(int id);
         PreOrder GetPreOrderByBookId(int bookID);
-        PreOrder GetPreOrderByUserId(string userID);
-
+        PreOrder GetPreOderByUserId(string userID);
 
         IEnumerable<PreOrder> GetAllPreOrders();
         IEnumerable<PreOrder> GetAllPreOrdersByUserId(string userID);

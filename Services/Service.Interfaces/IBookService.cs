@@ -21,9 +21,9 @@ namespace OnlineBookstore.Services.Service.Interfaces
         IEnumerable<Book> GetAllBooksByUser(User user);
         IEnumerable<Book> GetAllBooksByUserId(int userID);
         IEnumerable<Book> GetAllBooksByDateDescending();
-        IEnumerable<Book> GetAllBooksByDateAccending();
+        IEnumerable<Book> GetAllBooksByDateAscending();
         IEnumerable<Book> GetAllBooksFromToDateByUserId(int userID, DateTime from, DateTime to);
-        IEnumerable<Book> GetAllBooksByPriceAccending();
+        IEnumerable<Book> GetAllBooksByPriceAscending();
         IEnumerable<Book> GetAllBooksByPriceDescending();
         IEnumerable<Book> GetAllBooksByGeoLocationCountry(string country);
         IEnumerable<Book> GetAllBooksByPublisher(Publisher publisher);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Repositories.Repositories.Interfaces
 {
-     public interface IbookRepository
+     public interface IBookRepository
     {
         void AddBook(Book book);
         void EditBook(Book book);

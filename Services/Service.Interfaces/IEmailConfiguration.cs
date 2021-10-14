@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Services.Service.Interfaces
 {
-    interface IEmailConfiguration
+    public interface IEmailConfiguration
     {
         string SmtpServer { get; set; }
         int SmtpPort { get; }

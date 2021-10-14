@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Services.Service.Interfaces
 {
-    interface JobPost
+    public interface JobPost
     {
     }
 }
