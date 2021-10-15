@@ -34,7 +34,7 @@ namespace OnlineBookstore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookstoreConnection")));  //DefaultConnection
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookStoreinfo")));  //DefaultConnection
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>() // Add Identity roles for restraining the views
                 .AddEntityFrameworkStores<DataContext>(); // ApplicationDbContext
